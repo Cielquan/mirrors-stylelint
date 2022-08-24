@@ -1,0 +1,24 @@
+# base on https://github.com/pre-commit/mirrors-prettier/blob/d0a4882e1c96eca274f90b273f0f809ab3d98aff/.github/workflows/main.yml
+name: main
+on:
+  push:
+    branches: [main]
+  schedule:
+  - cron: '15 8 * * *'
+
+jobs:
+  build:
+    name: main
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - uses: actions/setup-python@v4
+    - run: pip install pre-commit-mirror-maker
+    - run: git config --global user.name 'Github Actions'
+    - run: git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+    - run: pre-commit-mirror . --id=stylelint --description='A CSS linter.' --language=node --package-name=stylelint --files-regex='\.(css|scss|sass)$' --entry=stylelint 
+    - run: |
+        git remote set-url origin https://x-access-token:$GH_TOKEN@github.com/$GITHUB_REPOSITORY
+        git push origin HEAD:refs/heads/main --tags
+      env:
+        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
