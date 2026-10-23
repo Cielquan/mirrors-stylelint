@@ -12,7 +12,7 @@ For stylelint: see https://github.com/stylelint/stylelint
 
 Add this to your `.pre-commit-config.yaml`:
 
-    -   repo: https://github.com/cielquan/stylelint
+    -   repo: https://github.com/Cielquan/mirrors-stylelint
         rev: ''  # Use the sha / tag you want to point at
         hooks:
         -   id: stylelint
